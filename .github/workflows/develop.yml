@@ -1,0 +1,21 @@
+name: "DEVELOP DEPLOY"
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  terraform:
+    if: false  # desabilitado temporariamente\
+    uses: ./.github/workflows/terraform.yml
+    with:
+      environment: prod
+      aws-assume-role-arn: "arn:aws:iam::011528262719:oidc-provider/token.actions.githubusercontent.com"
+      aws-region: "us-east-2"
+      aws-statefile-s3-bucket: "kreverson-us-east-2-terraform-statefile"
+      aws-lock-dynamodb-table: "kreverson-us-east-2-terraform-lock"
